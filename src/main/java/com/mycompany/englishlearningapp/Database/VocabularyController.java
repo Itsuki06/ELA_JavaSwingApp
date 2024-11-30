@@ -1,145 +1,110 @@
 package com.mycompany.englishlearningapp.Database;
 
-import com.mycompany.englishlearningapp.Database.UserController;
+import com.mycompany.englishlearningapp.Proccess.Vocabulary;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.mycompany.englishlearningapp.Database.Connect;
-import com.mycompany.englishlearningapp.Database.UserController;
 
 public class VocabularyController {
 
-    public Connect cn = new Connect();
-
-    // PROPERTIES:
-    private int wordID;
-    private String word;
-    private String definition;
-    private String example;
-
-    // INITIALIZATION:
-    public VocabularyController() {
+    // Thêm một từ vựng mới
+    public boolean addVocabulary(Vocabulary vocabulary) {
+        String query = "INSERT INTO Vocabulary (Word, Definition, Example) VALUES (?, ?, ?)";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, vocabulary.getWord());
+            pst.setString(2, vocabulary.getDefinition());
+            pst.setString(3, vocabulary.getExample());
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public VocabularyController(String word, String definition, String example) {
-        this.word = word;
-        this.definition = definition;
-        this.example = example;
+    // Lấy danh sách tất cả từ vựng
+    public List<Vocabulary> getAllVocabulary() {
+        List<Vocabulary> vocabList = new ArrayList<>();
+        String query = "SELECT * FROM Vocabulary";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            while (rs.next()) {
+                vocabList.add(new Vocabulary(
+                        rs.getString("Word"),
+                        rs.getString("Definition"),
+                        rs.getString("Example")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return vocabList;
     }
 
-    // GETTER:
-    public int getWordID() {
-        return wordID;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public String getDefinition() {
-        return definition;
-    }
-
-    public String getExample() {
-        return example;
-    }
-
-    // SETTER:
-    public void setWordID(int wordID) {
-        this.wordID = wordID;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    public void setDefinition(String definition) {
-        this.definition = definition;
-    }
-
-    public void setExample(String example) {
-        this.example = example;
-    }
-
-    public VocabularyController GetVocab(String word) throws SQLException {
-        VocabularyController voc = null;
-        String sql = "SELECT * FROM Vocabulary WHERE Word = ?";
-
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, word);
+    // Lấy từ vựng theo ID
+    public Vocabulary getVocabularyByID(int vocabularyId) {
+        String query = "SELECT * FROM Vocabulary WHERE VocabularyID = ?";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setInt(1, vocabularyId);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-                    voc = new VocabularyController();
-
-                    voc.setWordID(rs.getInt("wordID")); // Lấy ID từ cơ sở dữ liệu
-                    voc.setWord(rs.getString("word"));
-                    voc.setDefinition(rs.getString("wordDefinition"));
-                    voc.setExample(rs.getString("example"));
+                    return new Vocabulary(
+                            rs.getString("Word"),
+                            rs.getString("Definition"),
+                            rs.getString("Example")
+                    );
                 }
-                return voc;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    // Lấy danh sách từ vựng của một người dùng
-    public List<VocabularyController> GetVocabByUser(int userID) throws SQLException {
-        List<VocabularyController> list = new ArrayList<>();
-        String query = "SELECT * FROM Vocabulary WHERE userID = ?";
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
-            pst.setInt(1, userID);
+    // Lấy từ vựng theo WORD
+    public Vocabulary getVocabularyByWord(String Word) {
+        String query = "SELECT * FROM Vocabulary WHERE Word = ?";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, Word);
             try (ResultSet rs = pst.executeQuery()) {
-                while (rs.next()) {
-                    VocabularyController voc = new VocabularyController();
-                    
-                    voc.setWord(rs.getString("Word"));
-                    voc.setDefinition(rs.getString("Definition"));
-                    voc.setExample(rs.getString("Example"));
-
-                    list.add(voc);
+                if (rs.next()) {
+                    return new Vocabulary(
+                            rs.getInt("VocabularyID"),
+                            rs.getString("Word"),
+                            rs.getString("Definition"),
+                            rs.getString("Example")
+                    );
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return list;
+        return null;
     }
 
-    public boolean InsertData(VocabularyController obj, int userID) throws SQLException {
-        String sql = "INSERT INTO Vocabulary (Word, Definition, Example) VALUES (?, ?, ?)";
-
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, obj.getWord());
-            pst.setString(2, obj.getDefinition());
-            pst.setString(3, obj.getExample());
-            pst.setInt(4, userID);
-
+    // Cập nhật từ vựng
+    public boolean UpdateVocabulary(Vocabulary vocabulary) {
+        String query = "UPDATE Vocabulary SET Word = ?, Definition = ?, Example = ? WHERE VocabularyID = ?";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setString(1, vocabulary.getWord());
+            pst.setString(2, vocabulary.getDefinition());
+            pst.setString(3, vocabulary.getExample());
+            pst.setInt(4, vocabulary.getVocabularyID());
             return pst.executeUpdate() > 0;
-        }
-    }
-
-    public boolean EditData(VocabularyController obj, int userID) throws SQLException {
-        String sql = "UPDATE Vocabulary SET wordDefinition = ?, example = ? WHERE word = ? AND userID = ?";
-
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, obj.getDefinition());
-            pst.setString(2, obj.getExample());
-            pst.setString(3, obj.getWord());
-            pst.setInt(4, userID);
-
-            return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public boolean DeleteData(String word, int userID) throws SQLException {
-        String sql = "DELETE FROM Vocabulary WHERE word = ? AND userID = ?";
-
-        try (Connection conn = cn.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, word);
-            pst.setInt(2, userID);
-
+    // Xóa từ vựng theo ID
+    public boolean DeleteVocabularyByID(int vocabularyId) {
+        String query = "DELETE FROM Vocabulary WHERE VocabularyID = ?";
+        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query)) {
+            pst.setInt(1, vocabularyId);
             return pst.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

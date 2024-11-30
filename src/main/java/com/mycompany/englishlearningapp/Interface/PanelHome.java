@@ -1,14 +1,18 @@
 package com.mycompany.englishlearningapp.Interface;
 
 import com.mycompany.englishlearningapp.Database.UserController;
+import com.mycompany.englishlearningapp.Proccess.User;
 import javax.swing.*;
 
 public class PanelHome extends javax.swing.JPanel {
-
-    public PanelHome(String currentUser) {
+    
+    private User currentUser = new User();
+    
+    public PanelHome(User user) {
+        this.currentUser = user;
         initComponents();
         
-        lblWelcome.setText("Welcome, " + currentUser);
+        lblWelcome.setText("Welcome, " + currentUser.getUsername());
     }
 
     /**

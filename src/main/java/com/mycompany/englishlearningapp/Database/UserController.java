@@ -1,60 +1,11 @@
 package com.mycompany.englishlearningapp.Database;
 
 import java.sql.*;
+import com.mycompany.englishlearningapp.Proccess.User;
 import com.mycompany.englishlearningapp.Proccess.PasswordEncryptor;
 
 public class UserController {
-
-    // PROPERTIES:
-    private int UserID;
-    private String Username;
-    private String Email;
-
-    // INITIALIZATION:
-    public UserController() {
-    }
-
-    public UserController(String Username) {
-        this.Username = Username;
-    }
-
-    public UserController(int ID, String Username) {
-        this.UserID = ID;
-        this.Username = Username;
-    }
-
-    public UserController(int UserID, String Username, String Email) {
-        this.UserID = UserID;
-        this.Username = Username;
-        this.Email = Email;
-    }
-
-    // GETTER:
-    public int getUserID() {
-        return UserID;
-    }
-
-    public String getUsername() {
-        return Username;
-    }
-
-    public String getEmail() {
-        return Email;
-    }
-
-    // SETTER:
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
-    }
-
-    public void setUsername(String Username) {
-        this.Username = Username;
-    }
-
-    public void setEmail(String Email) {
-        this.Email = Email;
-    }
-
+    
 // Sign Ưp STATEMENT -------------------------------------------------------------------------------------------------------------------
     // Kiểm tra tồn tại cho SIGNUP
     public boolean isExistSIGNUP(String Username, String Email) throws SQLException {
@@ -116,15 +67,14 @@ public class UserController {
     
 // Using Data STATEMENT ---------------------------------------------------------------------------------------------------------------------
     // Lấy thông tin người dùng từ cơ sở dữ liệu theo UserName
-    public static UserController getUserByName(String Username) throws SQLException {
-        UserController user = null;
+    public static User getUserByName(String Username) throws SQLException {
+        User user = new User();
         String sql = "SELECT * FROM UserInfo WHERE Username = ?";
 
         try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, Username);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-                    user = new UserController();
                     user.setUserID(rs.getInt("UserID"));
                     user.setUsername(rs.getString("Username"));
                     user.setEmail(rs.getString("Email"));
@@ -135,26 +85,26 @@ public class UserController {
     }
     
     // Cập nhật thông tin người dùng
-    public boolean editUser(UserController user) throws SQLException {
-        String sql = "UPDATE UserInfo SET Username = ?, Email = ? WHERE UserID = ?";
-
-        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-            pst.setString(1, user.getUsername());
-            pst.setString(2, user.getEmail());
-            pst.setInt(3, user.getUserID());
-
-            return pst.executeUpdate() > 0;
-        }
-    }
+//    public boolean editUser(UserController user) throws SQLException {
+//        String sql = "UPDATE UserInfo SET Username = ?, Email = ? WHERE UserID = ?";
+//
+//        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
+//            pst.setString(1, user.getUsername());
+//            pst.setString(2, user.getEmail());
+//            pst.setInt(3, user.getUserID());
+//
+//            return pst.executeUpdate() > 0;
+//        }
+//    }
 
     // Xóa người dùng
-    public boolean deleteUser(int UserID, String UserName) throws SQLException {
-        String sql = "DELETE FROM UserInfo WHERE UserID = ? AND UserName = ?";
-
-        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
-            pst.setInt(1, UserID);
-            pst.setString(2, UserName);
-            return pst.executeUpdate() > 0;
-        }
-    }
+//    public boolean deleteUser(int UserID, String UserName) throws SQLException {
+//        String sql = "DELETE FROM UserInfo WHERE UserID = ? AND UserName = ?";
+//
+//        try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(sql)) {
+//            pst.setInt(1, UserID);
+//            pst.setString(2, UserName);
+//            return pst.executeUpdate() > 0;
+//        }
+//    }
 }

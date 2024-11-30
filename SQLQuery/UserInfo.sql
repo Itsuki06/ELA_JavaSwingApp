@@ -5,3 +5,6 @@
     Email NVARCHAR(100),
     DateCreated DATETIME DEFAULT GETDATE()
 );
+
+-- Check
+EXEC sp_help 'UserInfo';

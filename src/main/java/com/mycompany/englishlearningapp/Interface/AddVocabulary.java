@@ -1,7 +1,11 @@
 package com.mycompany.englishlearningapp.Interface;
 
 import com.mycompany.englishlearningapp.Database.UserController;
+import com.mycompany.englishlearningapp.Database.LibraryController;
 import com.mycompany.englishlearningapp.Database.VocabularyController;
+import com.mycompany.englishlearningapp.Proccess.UserLibraryRecord;
+import com.mycompany.englishlearningapp.Proccess.Vocabulary;
+
 import java.awt.*;
 import java.sql.*;
 import java.util.List;
@@ -10,30 +14,29 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class AddVocabulary extends javax.swing.JFrame {
+public class AddVocabulary extends JFrame {
 
     private final DefaultTableModel tableModel = new DefaultTableModel();
     final VocabularyController voc = new VocabularyController();
+    final LibraryController lib = new LibraryController();
     private boolean apply = true;
-    private Runnable callback;
-    private int currentUserID;
+    private Runnable callBack;
+    private int currentUserID = -1;
+    private int currentWordID = -1;
 
     public AddVocabulary(int userID) throws SQLException {
-        this.currentUserID = userID;
+        currentUserID = userID;
         initComponents();
         setTitle("Add new word");
+        centerWindow();
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Lấy kích thước màn hình
-        int x = (screenSize.width - getWidth()) / 2; // Tính tọa độ x
-        int y = (screenSize.height - getHeight()) / 2; // Tính tọa độ y
-        setLocation(x, y); // Đặt vị trí cửa sổ ở giữa màn hình
-
-        String[] colsName = {"Từ mới", "Định nghĩa", "Ví dụ"};
-        tableModel.setColumnIdentifiers(colsName);
-
+        // Initialize Table Columns
+        String[] columnNames = {"Từ mới", "Định nghĩa", "Ví dụ"};
+        tableModel.setColumnIdentifiers(columnNames);
         tblVocabulary.setModel(tableModel);
 
-        ShowData();
+        // Load initial data
+        LoadVocabularyData();
         SetNull();
         SetLock(true);
         SetButton(true);
@@ -47,7 +50,14 @@ public class AddVocabulary extends javax.swing.JFrame {
     }
 
     public AddVocabulary() throws SQLException {
-        initComponents();
+        this(0);
+    }
+
+    private void centerWindow() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
     }
 
     /**
@@ -232,15 +242,18 @@ public class AddVocabulary extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Thông báo", 1);
         } else {
             try {
-                // Liên kết từ vựng với currentUser
-                VocabularyController obj = new VocabularyController(nw, wd, eg);
                 if (apply) {
-                    voc.InsertData(obj, currentUserID);
+                    boolean isInserted = lib.InsertVocabularyAndUserLibrary(currentUserID, nw, wd, eg);
+                    if (isInserted) {
+                        JOptionPane.showMessageDialog(null, "Thêm từ vựng thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thêm từ vựng thất bại!");
+                    }
                 } else {
-                    voc.EditData(obj, currentUserID);
+                    lib.UpdateVocabulary(currentWordID, nw, wd, eg);
                 }
                 ClearData();
-                ShowData();
+                LoadVocabularyData();
                 SetNull();
                 SetLock(true);
                 SetButton(true);
@@ -249,38 +262,36 @@ public class AddVocabulary extends javax.swing.JFrame {
             }
         }
 
-        if (callback != null) {
-            callback.run();
+        if (callBack != null) {
+            callBack.run();
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        String nw = txtVocabulary.getText();
-        try {
-            if (nw.length() == 0) {
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng cần xoá!", "Thông báo", 1);
-            } else {
-                if (JOptionPane.showConfirmDialog(null, "Bạn muốn xóa từ " + nw + " này hay không?", "Thông báo", 1) == JOptionPane.YES_OPTION) {
-                    voc.DeleteData(nw, currentUserID);
-                    ClearData();
-                    ShowData();
+        String word = txtVocabulary.getText();
+        if (word.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xoá!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (currentWordID <= 0) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn từ vựng để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa từ \"" + word + "\"?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean isDeleted = lib.DeleteVocabularyAndUserLibrary(currentUserID, currentWordID);
+                if (isDeleted) {
+                    JOptionPane.showMessageDialog(null, "Xóa từ vựng thành công!");
+                    LoadVocabularyData();
                     SetNull();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Xóa từ vựng thất bại!");
                 }
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Xóa thất bại", "Thông báo", 1);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
-        String nw = txtVocabulary.getText();
-        if (nw.length() == 0) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn dòng cần sửa!", "Thông báo", 1);
-        } else {
-            SetLock(false);
-            SetButton(false);
-            apply = false;
-        }
+
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -291,27 +302,44 @@ public class AddVocabulary extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     public void tblVocabularyMouseClicked(java.awt.event.MouseEvent evt) {
-        try {
-            int row = this.tblVocabulary.getSelectedRow();
-            String nw = (this.tblVocabulary.getModel().getValueAt(row, 0)).toString();
-            VocabularyController obj = voc.GetVocab(nw);
-            if (obj != null) {
-                this.txtVocabulary.setText(obj.getWord());
-                this.txtDefinition.setText(obj.getDefinition());
-                this.txtExample.setText(obj.getExample());
+        int selectedRow = tblVocabulary.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Lấy từ vựng được chọn từ bảng
+            String word = tableModel.getValueAt(selectedRow, 0).toString();
+
+            // Dùng VocabularyController để lấy chi tiết từ vựng
+            Vocabulary vocab = voc.getVocabularyByWord(word);
+
+            if (vocab != null) {
+                currentWordID = vocab.getVocabularyID(); // Cập nhật biến toàn cục
+                txtVocabulary.setText(vocab.getWord());
+                txtDefinition.setText(vocab.getDefinition());
+                txtExample.setText(vocab.getExample());
+            } else {
+                currentWordID = -1; // Reset nếu không tìm thấy
+                System.out.println("Không tìm thấy từ vựng: " + word);
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error while getting data", "Announment", JOptionPane.ERROR_MESSAGE);
+            System.out.println("currentWordID đã được cập nhật: " + currentWordID);
+
         }
     }
 
-    private void ShowData() throws SQLException {
-        // Lấy danh sách từ vựng của currentUser
-        List<VocabularyController> lst = voc.GetVocabByUser(currentUserID);
-        ClearData();
-        for (VocabularyController obj : lst) {
-            String rows[] = {obj.getWord(), obj.getDefinition(), obj.getExample()};
-            tableModel.addRow(rows);
+    private void LoadVocabularyData() {
+        try {
+            // Lấy danh sách các từ vựng dựa trên UserID
+            List<Vocabulary> vocabList = lib.GetVocabByUserID(currentUserID);
+
+            // Xóa dữ liệu cũ trong bảng
+            ClearData();
+
+            // Duyệt qua các từ vựng và lấy thông tin chi tiết từ VocabularyController
+            for (Vocabulary vocab : vocabList) {
+                if (vocab != null) {
+                    tableModel.addRow(new String[]{vocab.getWord(), vocab.getDefinition(), vocab.getExample()});
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading vocabulary data", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -343,8 +371,15 @@ public class AddVocabulary extends javax.swing.JFrame {
         this.btnClose.setEnabled(a);
     }
 
-    public void setCallBack(Runnable callback) {
-        this.callback = callback;
+    public void setCallBack(Runnable callBack) {
+        this.callBack = callBack;
+    }
+
+    // Gọi lại khi cần, ví dụ sau khi lưu dữ liệu
+    private void onSave() {
+        if (callBack != null) {
+            callBack.run(); // Thực thi callBack để cập nhật dữ liệu
+        }
     }
 
     public static void main(String args[]) {
@@ -360,15 +395,11 @@ public class AddVocabulary extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddVocabulary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddVocabulary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddVocabulary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AddVocabulary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */

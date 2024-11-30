@@ -1,33 +1,34 @@
 package com.mycompany.englishlearningapp.Interface;
 
-import com.mycompany.englishlearningapp.Database.UserController;
-import com.mycompany.englishlearningapp.Database.VocabularyController;
+import com.mycompany.englishlearningapp.Database.LibraryController;
+import com.mycompany.englishlearningapp.Proccess.User;
+import com.mycompany.englishlearningapp.Proccess.Vocabulary;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import com.mycompany.englishlearningapp.Interface.AddVocabulary;
 
 public class PanelLibrary extends javax.swing.JPanel {
 
-    final VocabularyController voc = new VocabularyController();
+    final  LibraryController lib = new LibraryController();
     private final DefaultTableModel tableModel = new DefaultTableModel();
-    private UserController currentUser = new UserController();
-    private int userID;
-    
-    public PanelLibrary(String Username) throws SQLException {
-        this.currentUser = UserController.getUserByName(Username);
-        this.userID = currentUser.getUserID();
-        
+    private User currentUser = new User();
+    private int currentUserID;
+
+    public PanelLibrary(User user) throws SQLException {
+        this.currentUser = user;
+        this.currentUserID = currentUser.getUserID();
+
         initComponents();
-        
+
         String[] colsName = {"Từ mới", "Định nghĩa", "Ví dụ"};
         tableModel.setColumnIdentifiers(colsName);
 
         tblVocabulary.setModel(tableModel);
 
-        ShowData(userID);
+        ShowData(currentUserID);
     }
 
     /**
@@ -149,8 +150,8 @@ public class PanelLibrary extends javax.swing.JPanel {
                     .addComponent(btnModify, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -171,28 +172,32 @@ public class PanelLibrary extends javax.swing.JPanel {
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
         try {
-            AddVocabulary addForm = new AddVocabulary();
+            AddVocabulary addForm = new AddVocabulary(currentUserID);
 
             // Cập nhật lại bảng sau khi thêm hoặc chỉnh sửa từ vựng
             addForm.setCallBack(() -> {
                 try {
-                    ShowData(userID);  // Cập nhật lại bảng với dữ liệu mới
+                    ShowData(currentUserID);  // Cập nhật lại bảng với dữ liệu mới
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
 
             addForm.setVisible(true);
+            System.out.println("Current UserID: " + currentUserID);
         } catch (SQLException ex) {
             Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void ShowData(int userID) throws SQLException {
-        List<VocabularyController> lst = voc.GetVocabByUser(userID);
-        ClearData();
-        for (VocabularyController obj : lst) {
-            String rows[] = {obj.getWord(), obj.getDefinition(), obj.getExample()};
+        // Lấy danh sách từ vựng của người dùng thông qua LibraryController
+        List<Vocabulary> vocabList = lib.GetVocabByUserID(userID);  // Giả sử lib.GetVocabByUserLibrary trả về danh sách từ vựng
+        ClearData();  // Xóa dữ liệu hiện tại trong bảng
+
+        // Duyệt qua danh sách từ vựng và thêm vào bảng
+        for (Vocabulary vocab : vocabList) {
+            String rows[] = {vocab.getWord(), vocab.getDefinition(), vocab.getExample()};
             tableModel.addRow(rows);
         }
     }

@@ -11,7 +11,4 @@ public class Style {
     public static final Color BACKGROUND_COLOR = Color.decode("#FBFBFB"); // Trắng (hơi xám)
     public static final Color ACTIVE_BG_COLOR = Color.decode("#FFF7D1"); // Vàng nhạt
     public static final Color ACTIVE_FONT_COLOR = Color.decode("#102C57"); // Navy
-
-    public void setLocation(int x) {
-    }
 }

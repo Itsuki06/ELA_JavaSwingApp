@@ -2,12 +2,8 @@ package com.mycompany.englishlearningapp.Interface;
 
 // Container - height = 680;
 //             width = 1040;
-import com.mycompany.englishlearningapp.Interface.Login;
-import com.mycompany.englishlearningapp.Interface.PanelHome;
-import com.mycompany.englishlearningapp.Interface.PanelLearning;
-import com.mycompany.englishlearningapp.Interface.PanelLibrary;
-import com.mycompany.englishlearningapp.Interface.PanelStatistic;
-import com.mycompany.englishlearningapp.Interface.Style;
+import com.mycompany.englishlearningapp.Database.UserController;
+import com.mycompany.englishlearningapp.Proccess.User;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,11 +12,12 @@ import java.util.logging.Logger;
 public class DashBoard extends javax.swing.JFrame {
 
     private javax.swing.JButton currentActiveButton;
-    private String currentUserName;
-
+    private User currentUser = new User();
+    
     public DashBoard(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
-        this.currentUserName = userName;
+        this.currentUser = UserController.getUserByName(userName);
+        
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Lấy kích thước màn hình
@@ -36,12 +33,16 @@ public class DashBoard extends javax.swing.JFrame {
         pnContainer.setMinimumSize(Style.PANEL_DEFAULT_SIZE);
         pnContainer.setMaximumSize(Style.PANEL_DEFAULT_SIZE);
 
-        pnContainer.add(new PanelHome(currentUserName), "PanelHome");
-        pnContainer.add(new PanelLibrary(currentUserName), "PanelLibrary");
+        pnContainer.add(new PanelHome(currentUser), "PanelHome");
+        pnContainer.add(new PanelLibrary(currentUser), "PanelLibrary");
         pnContainer.add(new PanelLearning(), "PanelLearning");
         pnContainer.add(new PanelStatistic(), "PanelStatistic");
     }
-
+    
+    public DashBoard () throws SQLException {
+        this("Guest");
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -274,7 +275,7 @@ public class DashBoard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
-                new DashBoard(currentUserName).setVisible(true);
+                new DashBoard().setVisible(true);
             } catch (SQLException ex) {
                 Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
             }
