@@ -176,8 +176,8 @@ public class Login extends javax.swing.JFrame {
             if (login.isUserValid(Username, new String(Password))) {
                 JOptionPane.showMessageDialog(null, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-                // Chuyển sang giao diện DashBoard
-                DashBoard dashBoard = new DashBoard(Username);
+                // Chuyển sang giao diện MainForm
+                MainForm dashBoard = new MainForm(Username);
                 dashBoard.setVisible(true);
                 this.dispose(); // Đóng cửa sổ hiện tại
             } else {

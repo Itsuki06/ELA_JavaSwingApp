@@ -9,12 +9,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DashBoard extends javax.swing.JFrame {
+public class MainForm extends javax.swing.JFrame {
 
     private javax.swing.JButton currentActiveButton;
     private User currentUser = new User();
     
-    public DashBoard(String userName) throws SQLException {
+    public MainForm(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
         this.currentUser = UserController.getUserByName(userName);
         
@@ -39,7 +39,7 @@ public class DashBoard extends javax.swing.JFrame {
         pnContainer.add(new PanelStatistic(), "PanelStatistic");
     }
     
-    public DashBoard () throws SQLException {
+    public MainForm () throws SQLException {
         this("Guest");
         initComponents();
     }
@@ -262,22 +262,22 @@ public class DashBoard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DashBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
-                new DashBoard().setVisible(true);
+                new MainForm().setVisible(true);
             } catch (SQLException ex) {
-                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
