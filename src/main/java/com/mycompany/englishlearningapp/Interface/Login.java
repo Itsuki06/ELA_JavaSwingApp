@@ -14,11 +14,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         setTitle("English Learning App - Login");
         initComponents();
-
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Lấy kích thước màn hình
-        int x = (screenSize.width - getWidth()) / 2; // Tính tọa độ x
-        int y = (screenSize.height - getHeight()) / 2; // Tính tọa độ y
-        setLocation(x, y); // Đặt vị trí cửa sổ ở giữa màn hình
+        centerWindow();
 
         passwordField.addKeyListener(new KeyAdapter() {
             @Override
@@ -161,7 +157,13 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    private void centerWindow() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
+    }
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // Lấy thông tin từ giao diện
         String Username = txtUserName.getText();

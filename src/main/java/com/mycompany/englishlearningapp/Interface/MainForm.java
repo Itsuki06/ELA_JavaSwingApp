@@ -13,17 +13,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private javax.swing.JButton currentActiveButton;
     private User currentUser = new User();
-    
+
     public MainForm(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
         this.currentUser = UserController.getUserByName(userName);
-        
-        initComponents();
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); // Lấy kích thước màn hình
-        int x = (screenSize.width - getWidth()) / 2; // Tính tọa độ x
-        int y = (screenSize.height - getHeight()) / 2; // Tính tọa độ y
-        setLocation(x, y); // Đặt vị trí cửa sổ ở giữa màn hình
+        initComponents();
+        centerWindow();
 
         setActiveButton(btnHome);
         showPanel("PanelHome");
@@ -38,11 +34,12 @@ public class MainForm extends javax.swing.JFrame {
         pnContainer.add(new PanelLearning(), "PanelLearning");
         pnContainer.add(new PanelStatistic(), "PanelStatistic");
     }
-    
-    public MainForm () throws SQLException {
+
+    public MainForm() throws SQLException {
         this("Guest");
         initComponents();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,6 +197,13 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void centerWindow() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
+    }
 
     private void showPanel(String panelName) {
         CardLayout layout = (CardLayout) pnContainer.getLayout();
@@ -271,7 +275,7 @@ public class MainForm extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
