@@ -77,10 +77,10 @@ public class FlashCard extends javax.swing.JFrame {
     if (selectedAnswer.equals(correctAnswer)) {
         correct++;
         Lbl_key.setForeground(Color.GREEN);
-        Lbl_key.setText("Correct! Answer: " + correctAnswer);
+        Lbl_key.setText("Đáp án đúng: " + correctAnswer);
     } else {
         Lbl_key.setForeground(Color.RED);
-        Lbl_key.setText("Wrong! Correct Answer: " + correctAnswer);
+        Lbl_key.setText("Ôi không! Đáp án đúng: " + correctAnswer);
     }
 
     // Tăng chỉ số câu hỏi
@@ -134,7 +134,7 @@ public class FlashCard extends javax.swing.JFrame {
             .addGroup(jPanel_Q_ContainerLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(Lbl_Question, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_Q_ContainerLayout.setVerticalGroup(
             jPanel_Q_ContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,6 +147,7 @@ public class FlashCard extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(234, 219, 200));
 
         jRadioButton1.setBackground(new java.awt.Color(255, 247, 209));
+        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioButton1.setText("jRadioButton1");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +156,7 @@ public class FlashCard extends javax.swing.JFrame {
         });
 
         jRadioButton2.setBackground(new java.awt.Color(255, 247, 209));
+        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioButton2.setText("jRadioButton2");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,6 +165,7 @@ public class FlashCard extends javax.swing.JFrame {
         });
 
         jRadioButton3.setBackground(new java.awt.Color(255, 247, 209));
+        jRadioButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioButton3.setText("jRadioButton3");
         jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,6 +174,7 @@ public class FlashCard extends javax.swing.JFrame {
         });
 
         jRadioButton4.setBackground(new java.awt.Color(255, 247, 209));
+        jRadioButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jRadioButton4.setText("jRadioButton4");
         jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,8 +183,9 @@ public class FlashCard extends javax.swing.JFrame {
         });
 
         jButton_Next_Q.setBackground(new java.awt.Color(255, 247, 209));
-        jButton_Next_Q.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton_Next_Q.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jButton_Next_Q.setText("Next");
+        jButton_Next_Q.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Next_Q.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_Next_QActionPerformed(evt);
@@ -197,36 +202,38 @@ public class FlashCard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
+                        .addGap(108, 108, 108)
+                        .addComponent(jButton_Next_Q, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(124, 124, 124)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton3)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(jButton_Next_Q))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(Lbl_key, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Lbl_key, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton3)
+                                    .addComponent(jRadioButton1))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton2)
+                                    .addComponent(jRadioButton4))))))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
-                .addGap(9, 9, 9)
+                .addGap(75, 75, 75)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4))
+                .addGap(24, 24, 24)
                 .addComponent(Lbl_key, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton_Next_Q)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton_Next_Q, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,19 +241,18 @@ public class FlashCard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_Q_Container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel_Q_Container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel_Q_Container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -283,7 +289,7 @@ public class FlashCard extends javax.swing.JFrame {
             );
             return; // Dừng lại, không chuyển câu hỏi
         }
-        if (jButton_Next_Q.getText().equals("Restart The Quiz")) {
+        if (jButton_Next_Q.getText().equals("Làm lại bài")) {
             jButton_Next_Q.setText("Next");
             jPanel_Q_Container.setBackground(new Color(0xEADBC8));
             index = 0;
@@ -293,13 +299,13 @@ public class FlashCard extends javax.swing.JFrame {
         // Nếu đã trả lời hết các câu hỏi
         if (index == questions.size()) {
             if (correct >= (float) questions.size() / 2) {
-                Lbl_Question.setText("Your Score: " + correct + " / " + questions.size());
+                Lbl_Question.setText("Điểm của bạn: " + correct + " / " + questions.size());
                 jPanel_Q_Container.setBackground(Color.green);
             } else {
-                Lbl_Question.setText("Your Score: " + correct + " / " + questions.size());
+                Lbl_Question.setText("Điểm của bạn: " + correct + " / " + questions.size());
                 jPanel_Q_Container.setBackground(Color.red);
             }
-            jButton_Next_Q.setText("Restart The Quiz");
+            jButton_Next_Q.setText("Làm lại bài");
         } else {
             // Chuyển sang câu hỏi mới
             enableRbuttons(true);
@@ -317,7 +323,7 @@ public class FlashCard extends javax.swing.JFrame {
 
             // Nếu đây là câu hỏi cuối
             if (index == questions.size() - 1) {
-                jButton_Next_Q.setText("Finish and See Your Result");
+                jButton_Next_Q.setText("Kết thúc và xem điểm");
             }
         }
 
