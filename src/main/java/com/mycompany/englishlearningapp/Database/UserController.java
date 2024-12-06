@@ -84,6 +84,11 @@ public class UserController {
                         // Chuyển đổi Timestamp thành Date và gán vào User
                         user.setDateCreated(new java.sql.Date(dateCreated.getTime())); // Hoặc dùng Timestamp nếu cần thời gian
                     }
+                    Timestamp dateChangedPass = rs.getTimestamp("DateChangedPass");
+                    if (dateChangedPass != null) {
+                        // Chuyển đổi Timestamp thành Date và gán vào User
+                        user.setDateChangedPass(new java.sql.Date(dateChangedPass.getTime())); // Hoặc dùng Timestamp nếu cần thời gian
+                    }
                 }
             }
         }

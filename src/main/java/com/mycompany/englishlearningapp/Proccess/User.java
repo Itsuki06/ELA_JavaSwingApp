@@ -3,11 +3,12 @@ package com.mycompany.englishlearningapp.Proccess;
 import java.sql.Date;
 
 public class User {
-    
+
     private int UserID;
     private String Username;
     private String Email;
     private Date dateCreated;
+    private Date dateChangedPass;
 
     // Constructor
     public User(int UserID, String Username, String Email) {
@@ -50,5 +51,13 @@ public class User {
 
     public void setDateCreated(java.sql.Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public java.sql.Date getDateChangedPass() {
+        return dateChangedPass;
+    }
+
+    public void setDateChangedPass(java.sql.Date dateChangedPass) {
+        this.dateChangedPass = dateChangedPass;
     }
 }

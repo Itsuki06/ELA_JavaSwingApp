@@ -3,7 +3,8 @@
     Username NVARCHAR(50) NOT NULL UNIQUE,
     PasswordHash NVARCHAR(255) NOT NULL,
     Email NVARCHAR(100),
-    DateCreated DATETIME DEFAULT GETDATE()
+    DateCreated DATETIME DEFAULT GETDATE(),
+    DateChangedPass DATETIME DEFAULT GETDATE()
 );
 
 -- Check

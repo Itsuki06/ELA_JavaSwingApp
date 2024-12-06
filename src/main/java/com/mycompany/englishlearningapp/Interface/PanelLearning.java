@@ -29,24 +29,24 @@ public class PanelLearning extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(251, 251, 251));
         jPanel4.setPreferredSize(new java.awt.Dimension(372, 50));
 
-        pnStatistic1.setFont(new java.awt.Font("Cascadia Code", 1, 24)); // NOI18N
+        pnStatistic1.setFont(new java.awt.Font("Cascadia Code", 1, 30)); // NOI18N
         pnStatistic1.setText("HỌC TỪ VỰNG");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(pnStatistic1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(89, Short.MAX_VALUE)
+                .addComponent(pnStatistic1)
+                .addGap(77, 77, 77))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnStatistic1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

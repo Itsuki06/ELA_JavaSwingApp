@@ -82,8 +82,8 @@ public class PanelLibrary extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
         btnUnSave = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane = new javax.swing.JScrollPane();
         tblVocabulary = new javax.swing.JTable();
 
@@ -93,24 +93,24 @@ public class PanelLibrary extends javax.swing.JPanel {
 
         lblVocabulary.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
         lblVocabulary.setText("Từ mới");
-        pnEnterInfo.add(lblVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
+        pnEnterInfo.add(lblVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
 
         lblDefinition.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
         lblDefinition.setText("Định nghĩa");
-        pnEnterInfo.add(lblDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        pnEnterInfo.add(lblDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         lblExample.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
         lblExample.setText("Ví dụ");
-        pnEnterInfo.add(lblExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
+        pnEnterInfo.add(lblExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, -1));
 
         txtVocabulary.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
-        pnEnterInfo.add(txtVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 350, -1));
+        pnEnterInfo.add(txtVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 350, -1));
 
         txtDefinition.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
-        pnEnterInfo.add(txtDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 700, -1));
+        pnEnterInfo.add(txtDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 700, -1));
 
         txtExample.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
-        pnEnterInfo.add(txtExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 700, -1));
+        pnEnterInfo.add(txtExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 700, -1));
 
         btnAdd.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnAdd.setText("Thêm");
@@ -120,7 +120,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnAddActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
+        pnEnterInfo.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, -1, -1));
 
         btnModify.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnModify.setText("Sửa");
@@ -130,7 +130,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnModifyActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnModify, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
+        pnEnterInfo.add(btnModify, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
 
         btnDelete.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnDelete.setText("Xóa");
@@ -140,7 +140,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnDeleteActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, -1, -1));
+        pnEnterInfo.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
 
         btnSave.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnSave.setText("Lưu");
@@ -150,7 +150,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnSaveActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, -1, -1));
+        pnEnterInfo.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 250, -1, -1));
 
         btnClose.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnClose.setText("Thoát");
@@ -160,7 +160,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnCloseActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 220, -1, -1));
+        pnEnterInfo.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 250, -1, -1));
 
         btnUnSave.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
         btnUnSave.setText("Không Lưu");
@@ -170,24 +170,29 @@ public class PanelLibrary extends javax.swing.JPanel {
                 btnUnSaveActionPerformed(evt);
             }
         });
-        pnEnterInfo.add(btnUnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 130, -1));
-
-        jLabel1.setFont(new java.awt.Font("Cascadia Code", 1, 24)); // NOI18N
-        jLabel1.setText("THƯ VIỆN TỪ VỰNG");
-        pnEnterInfo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+        pnEnterInfo.add(btnUnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 250, 130, -1));
 
         jPanel2.setBackground(new java.awt.Color(251, 251, 251));
         jPanel2.setPreferredSize(new java.awt.Dimension(372, 50));
+
+        jLabel1.setFont(new java.awt.Font("Cascadia Code", 1, 30)); // NOI18N
+        jLabel1.setText("THƯ VIỆN TỪ VỰNG");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(256, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(244, 244, 244))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
         pnEnterInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 800, -1));
@@ -236,9 +241,9 @@ public class PanelLibrary extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnEnterInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnEnterInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

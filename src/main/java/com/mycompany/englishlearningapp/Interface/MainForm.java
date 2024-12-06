@@ -2,6 +2,7 @@ package com.mycompany.englishlearningapp.Interface;
 
 // Container - height = 680;
 //             width = 1040;
+import com.mycompany.englishlearningapp.Database.LibraryController;
 import com.mycompany.englishlearningapp.Database.UserController;
 import com.mycompany.englishlearningapp.Proccess.User;
 import java.awt.*;
@@ -12,8 +13,11 @@ import java.util.logging.Logger;
 public class MainForm extends javax.swing.JFrame {
 
     private javax.swing.JButton currentActiveButton;
+    private LibraryController lib = new LibraryController();
     private User currentUser = new User();
-
+    private PanelHome panelHome;
+    private int wordCount = 0;
+    
     public MainForm(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
         this.currentUser = UserController.getUserByName(userName);
@@ -28,11 +32,12 @@ public class MainForm extends javax.swing.JFrame {
         pnContainer.setPreferredSize(Style.PANEL_DEFAULT_SIZE);
         pnContainer.setMinimumSize(Style.PANEL_DEFAULT_SIZE);
         pnContainer.setMaximumSize(Style.PANEL_DEFAULT_SIZE);
-
-        pnContainer.add(new PanelHome(currentUser), "PanelHome");
+        
+        panelHome = new PanelHome(currentUser);
+        pnContainer.add(panelHome, "PanelHome");
         pnContainer.add(new PanelLibrary(currentUser), "PanelLibrary");
         pnContainer.add(new PanelLearning(), "PanelLearning");
-        pnContainer.add(new PanelProfile(currentUser), "PanelStatistic");
+        pnContainer.add(new PanelProfile(currentUser), "PanelProfile");
     }
 
     public MainForm() throws SQLException {
@@ -57,7 +62,7 @@ public class MainForm extends javax.swing.JFrame {
         btnLogOut = new javax.swing.JButton();
         btnLearnVoc = new javax.swing.JButton();
         txtIcon = new javax.swing.JLabel();
-        btnStatistic = new javax.swing.JButton();
+        btnProfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -122,15 +127,15 @@ public class MainForm extends javax.swing.JFrame {
         txtIcon.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-hoyolab-cute-color\\icons8-hoyolab-80.png")); // NOI18N
         txtIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(198, 231, 255)));
 
-        btnStatistic.setBackground(new java.awt.Color(251, 251, 251));
-        btnStatistic.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnStatistic.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-statistic-basic-outline\\icons8-graph-30.png")); // NOI18N
-        btnStatistic.setText("Hồ sơ");
-        btnStatistic.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnStatistic.setIconTextGap(10);
-        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+        btnProfile.setBackground(new java.awt.Color(251, 251, 251));
+        btnProfile.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
+        btnProfile.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-statistic-basic-outline\\icons8-graph-30.png")); // NOI18N
+        btnProfile.setText("Hồ sơ");
+        btnProfile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProfile.setIconTextGap(10);
+        btnProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStatisticActionPerformed(evt);
+                btnProfileActionPerformed(evt);
             }
         });
 
@@ -152,7 +157,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnStatistic, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnMenuLayout.setVerticalGroup(
@@ -167,7 +172,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLearnVoc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
@@ -237,6 +242,10 @@ public class MainForm extends javax.swing.JFrame {
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         setActiveButton(btnHome);
         showPanel("PanelHome");
+                
+        wordCount = lib.GetNumberOfWord(currentUser.getUserID());
+        
+        panelHome.updateWordCount(wordCount);
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnLearnVocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLearnVocActionPerformed
@@ -244,10 +253,10 @@ public class MainForm extends javax.swing.JFrame {
         showPanel("PanelLearning");
     }//GEN-LAST:event_btnLearnVocActionPerformed
 
-    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
-        setActiveButton(btnStatistic);
-        showPanel("PanelStatistic");
-    }//GEN-LAST:event_btnStatisticActionPerformed
+    private void btnProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProfileActionPerformed
+        setActiveButton(btnProfile);
+        showPanel("PanelProfile");
+    }//GEN-LAST:event_btnProfileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,7 +300,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnLearnVoc;
     private javax.swing.JButton btnLibrary;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JButton btnStatistic;
+    private javax.swing.JButton btnProfile;
     private javax.swing.JPanel pnBackground;
     private javax.swing.JPanel pnContainer;
     private javax.swing.JPanel pnMenu;
