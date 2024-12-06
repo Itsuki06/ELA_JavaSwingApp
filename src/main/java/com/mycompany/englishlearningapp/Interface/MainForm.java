@@ -20,24 +20,36 @@ public class MainForm extends javax.swing.JFrame {
     
     public MainForm(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
+        System.out.println("3");
         this.currentUser = UserController.getUserByName(userName);
-        
+        if(currentUser == null) System.out.println("3.5");
+        System.out.println("4");
         initComponents();
+        System.out.println("5");
         centerWindow();
 
+        System.out.println("6");
         setActiveButton(btnHome);
+        System.out.println("7");
         showPanel("PanelHome");
+        System.out.println("8");
 
         pnContainer.setLayout(new CardLayout());
         pnContainer.setPreferredSize(Style.PANEL_DEFAULT_SIZE);
         pnContainer.setMinimumSize(Style.PANEL_DEFAULT_SIZE);
         pnContainer.setMaximumSize(Style.PANEL_DEFAULT_SIZE);
-        
+        System.out.println("9");
         panelHome = new PanelHome(currentUser);
+        if(panelHome == null) System.out.println("9.5");
+        System.out.println("10");
         pnContainer.add(panelHome, "PanelHome");
+        System.out.println("11");
         pnContainer.add(new PanelLibrary(currentUser), "PanelLibrary");
+        System.out.println("12");
         pnContainer.add(new PanelLearning(), "PanelLearning");
+        System.out.println("13");
         pnContainer.add(new PanelProfile(currentUser), "PanelProfile");
+        System.out.println("14");
     }
 
     public MainForm() throws SQLException {
@@ -80,7 +92,6 @@ public class MainForm extends javax.swing.JFrame {
 
         btnHome.setBackground(new java.awt.Color(251, 251, 251));
         btnHome.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnHome.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-home\\icons8-home-30.png")); // NOI18N
         btnHome.setText("Trang chủ");
         btnHome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnHome.setIconTextGap(10);
@@ -92,7 +103,6 @@ public class MainForm extends javax.swing.JFrame {
 
         btnLibrary.setBackground(new java.awt.Color(251, 251, 251));
         btnLibrary.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnLibrary.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-book-shelf\\icons8-book-shelf.png")); // NOI18N
         btnLibrary.setText("Thư viện");
         btnLibrary.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLibrary.setIconTextGap(10);
@@ -104,7 +114,7 @@ public class MainForm extends javax.swing.JFrame {
 
         btnLogOut.setBackground(new java.awt.Color(251, 251, 251));
         btnLogOut.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnLogOut.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-logout\\icons8-logout-30.png")); // NOI18N
+        btnLogOut.setText("Thoát");
         btnLogOut.setPreferredSize(new java.awt.Dimension(50, 50));
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,7 +124,6 @@ public class MainForm extends javax.swing.JFrame {
 
         btnLearnVoc.setBackground(new java.awt.Color(251, 251, 251));
         btnLearnVoc.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnLearnVoc.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-flashcards\\icons8-flashcards-30.png")); // NOI18N
         btnLearnVoc.setText("Học từ");
         btnLearnVoc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLearnVoc.setIconTextGap(10);
@@ -124,12 +133,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        txtIcon.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-hoyolab-cute-color\\icons8-hoyolab-80.png")); // NOI18N
         txtIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(198, 231, 255)));
 
         btnProfile.setBackground(new java.awt.Color(251, 251, 251));
         btnProfile.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
-        btnProfile.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-statistic-basic-outline\\icons8-graph-30.png")); // NOI18N
         btnProfile.setText("Hồ sơ");
         btnProfile.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProfile.setIconTextGap(10);
@@ -144,20 +151,23 @@ public class MainForm extends javax.swing.JFrame {
         pnMenuLayout.setHorizontalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnMenuLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(txtIcon)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnMenuLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHome, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                    .addComponent(btnLibrary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLearnVoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnMenuLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHome, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(btnLibrary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLearnVoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnProfile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnMenuLayout.createSequentialGroup()
+                        .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnMenuLayout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(txtIcon))
+                            .addGroup(pnMenuLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnMenuLayout.setVerticalGroup(

@@ -1,5 +1,6 @@
 package com.mycompany.englishlearningapp.Interface;
 
+import com.mycompany.englishlearningapp.Database.UserController;
 import com.mycompany.englishlearningapp.Proccess.User;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 public class PanelProfile extends javax.swing.JPanel {
 
     private User currentUser = new User();
-
+    private UserController userController = new UserController();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public PanelProfile(User user) {
@@ -75,7 +76,7 @@ public class PanelProfile extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(139, 139, 139)
                 .addComponent(lblProfile)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,6 +101,11 @@ public class PanelProfile extends javax.swing.JPanel {
         btnChangePass.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N
         btnChangePass.setText("Đổi mật khẩu");
         btnChangePass.setPreferredSize(new java.awt.Dimension(200, 40));
+        btnChangePass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePassActionPerformed(evt);
+            }
+        });
 
         txtUserName.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N
 
@@ -214,6 +220,12 @@ public class PanelProfile extends javax.swing.JPanel {
             .addComponent(pnProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnChangePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePassActionPerformed
+        // TODO add your handling code  here:
+       
+        
+    }//GEN-LAST:event_btnChangePassActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

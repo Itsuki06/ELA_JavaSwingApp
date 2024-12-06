@@ -12,6 +12,7 @@ com\mycompany\englishlearningapp\Proccess\UserLibraryRecord.class
 com\mycompany\englishlearningapp\Proccess\ProficiencyLevel.class
 com\mycompany\englishlearningapp\Interface\HocTu$4.class
 com\mycompany\englishlearningapp\Interface\Login$2.class
+com\mycompany\englishlearningapp\Interface\PanelLearning$3.class
 com\mycompany\englishlearningapp\Interface\SignUp$4.class
 com\mycompany\englishlearningapp\Proccess\CrudDapAn.class
 com\mycompany\englishlearningapp\Database\Connect.class
@@ -20,6 +21,7 @@ com\mycompany\englishlearningapp\Proccess\FlashCard$1.class
 com\mycompany\englishlearningapp\Interface\MainForm$2.class
 com\mycompany\englishlearningapp\Proccess\PasswordEncryptor.class
 com\mycompany\englishlearningapp\Interface\PanelLibrary$6.class
+com\mycompany\englishlearningapp\Interface\PanelLearning$1.class
 com\mycompany\englishlearningapp\Proccess\FlashCard$4.class
 com\mycompany\englishlearningapp\Interface\MainForm.class
 com\mycompany\englishlearningapp\Model\Vocabulary.class
@@ -37,6 +39,7 @@ com\mycompany\englishlearningapp\Model\Tumoi.class
 com\mycompany\englishlearningapp\Interface\HocTu$2.class
 com\mycompany\englishlearningapp\Interface\Login.class
 com\mycompany\englishlearningapp\Interface\SignUp$1.class
+com\mycompany\englishlearningapp\Interface\PanelProfile$1.class
 com\mycompany\englishlearningapp\Interface\MainForm$1.class
 com\mycompany\englishlearningapp\Interface\PanelLibrary$5.class
 com\mycompany\englishlearningapp\Database\VocabularyController.class
@@ -54,6 +57,7 @@ com\mycompany\englishlearningapp\Proccess\FlashCard$6.class
 com\mycompany\englishlearningapp\Interface\Login$3.class
 com\mycompany\englishlearningapp\Model\Dapan.class
 com\mycompany\englishlearningapp\Proccess\FlashCard.class
+com\mycompany\englishlearningapp\Interface\PanelLearning$2.class
 com\mycompany\englishlearningapp\Model\Cauhoi.class
 com\mycompany\englishlearningapp\Interface\SignUp$2.class
 com\mycompany\englishlearningapp\Interface\Style.class

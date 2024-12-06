@@ -80,7 +80,7 @@ public class LibraryController {
     // Lấy danh sách từ vựng theo UserID
     public List<Vocabulary> GetVocabByUserID(int userID) throws SQLException {
         List<Vocabulary> vocabList = new ArrayList<>();
-        String query = "SELECT v.Word, v.Definition, v.Example "
+        String query = "SELECT v.* "
                 + "FROM Vocabulary v "
                 + "JOIN UserLibrary ul ON v.VocabularyID = ul.VocabularyID "
                 + "WHERE ul.UserID = ?";

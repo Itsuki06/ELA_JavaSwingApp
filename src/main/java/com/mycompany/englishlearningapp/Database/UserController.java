@@ -3,9 +3,10 @@ package com.mycompany.englishlearningapp.Database;
 import java.sql.*;
 import com.mycompany.englishlearningapp.Proccess.User;
 import com.mycompany.englishlearningapp.Proccess.PasswordEncryptor;
+import java.time.LocalDate;
 
 public class UserController {
-
+    
 // Sign Ưp STATEMENT -------------------------------------------------------------------------------------------------------------------
     // Kiểm tra tồn tại cho SIGNUP
     public boolean isExistSIGNUP(String Username, String Email) throws SQLException {
@@ -84,11 +85,14 @@ public class UserController {
                         // Chuyển đổi Timestamp thành Date và gán vào User
                         user.setDateCreated(new java.sql.Date(dateCreated.getTime())); // Hoặc dùng Timestamp nếu cần thời gian
                     }
+                    
                     Timestamp dateChangedPass = rs.getTimestamp("DateChangedPass");
                     if (dateChangedPass != null) {
                         // Chuyển đổi Timestamp thành Date và gán vào User
                         user.setDateChangedPass(new java.sql.Date(dateChangedPass.getTime())); // Hoặc dùng Timestamp nếu cần thời gian
                     }
+                    else
+                        user.setDateChangedPass(Date.valueOf(LocalDate.now()));
                 }
             }
         }
@@ -117,4 +121,22 @@ public class UserController {
 //            return pst.executeUpdate() > 0;
 //        }
 //    }
+    
+    public boolean editPassUser(int id, String pass){
+        String query = "update UserInfo set PasswordHash = ? where UserID = ?";
+        try(Connection conn = Connect.getConnection(); PreparedStatement ps = conn.prepareStatement(query)){
+            int i = ps.executeUpdate();
+            if(i > 0) return true; 
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        UserController us =new UserController();
+        User user = UserController.getUserByName("vidu1");
+        System.out.println(user);
+    }
 }

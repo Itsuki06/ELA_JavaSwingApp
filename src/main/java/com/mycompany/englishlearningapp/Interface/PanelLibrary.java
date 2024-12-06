@@ -10,11 +10,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelLibrary extends javax.swing.JPanel {
-    private final DefaultTableModel tableModel = new DefaultTableModel();
+    private final DefaultTableModel tableModel = new DefaultTableModel(){
+        public boolean isCellEditable(){
+            return false;
+        }
+    };
     final VocabularyController voc = new VocabularyController();
     final LibraryController lib = new LibraryController();
     private boolean apply = true;
@@ -28,19 +33,21 @@ public class PanelLibrary extends javax.swing.JPanel {
         this.currentUserID = currentUser.getUserID();
         
         initComponents();
-        centerWindow();
+        centerWindow(); 
 
         // Initialize Table Columns
         String[] columnNames = {"Từ mới", "Định nghĩa", "Ví dụ"};
         tableModel.setColumnIdentifiers(columnNames);
         tblVocabulary.setModel(tableModel);
-
+        tblVocabulary.getTableHeader().setReorderingAllowed(false);
         // Load initial data
         LoadVocabularyData();
         SetNull();
         SetLock(true);
         SetButton(true);
 
+        
+        
         tblVocabulary.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -353,13 +360,17 @@ public class PanelLibrary extends javax.swing.JPanel {
         try {
             // Lấy danh sách các từ vựng dựa trên UserID
             List<Vocabulary> vocabList = lib.GetVocabByUserID(currentUserID);
-
+            
+            for(Vocabulary vc : vocabList){
+                System.out.println(vc);
+            }
             // Xóa dữ liệu cũ trong bảng
             ClearData();
 
             // Duyệt qua các từ vựng và lấy thông tin chi tiết từ VocabularyController
             for (Vocabulary vocab : vocabList) {
                 if (vocab != null) {
+                    System.out.println(vocab);
                     tableModel.addRow(new String[]{vocab.getWord(), vocab.getDefinition(), vocab.getExample()});
                 }
             }
@@ -369,10 +380,7 @@ public class PanelLibrary extends javax.swing.JPanel {
     }
 
     private void ClearData() throws SQLException {
-        int n = tableModel.getRowCount() - 1;
-        for (int i = n; i >= 0; i--) {
-            tableModel.removeRow(i);
-        }
+        tableModel.setRowCount(0);
     }
 
     private void SetNull() {
@@ -435,17 +443,17 @@ public class PanelLibrary extends javax.swing.JPanel {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new PanelLibrary().setVisible(true);
+        try {
+                    JFrame frm  =new JFrame();
+                    frm.add(new PanelLibrary());
+                    frm.setSize(1000, 1000);
+                    frm.setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        });
     }
+    
+   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

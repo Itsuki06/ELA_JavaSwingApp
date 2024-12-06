@@ -60,4 +60,11 @@ public class User {
     public void setDateChangedPass(java.sql.Date dateChangedPass) {
         this.dateChangedPass = dateChangedPass;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "UserID=" + UserID + ", Username=" + Username + ", Email=" + Email + ", dateCreated=" + dateCreated + ", dateChangedPass=" + dateChangedPass + '}';
+    }
+    
+    
 }

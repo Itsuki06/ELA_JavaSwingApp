@@ -1,13 +1,52 @@
 package com.mycompany.englishlearningapp.Interface;
+import com.mycompany.englishlearningapp.Database.VocabularyController;
+import com.mycompany.englishlearningapp.Model.Vocabulary;
+import javax.swing.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class PanelLearning extends javax.swing.JPanel {
+    private List<String[]> flashcards;  // List chứa các flashcards (câu hỏi và đáp án)
+    private int currentCardIndex;       // Chỉ số của flashcard hiện tại
+    private boolean showingAnswer;// Kiểm tra xem có đang hiển thị đáp án không?
+    private VocabularyController vocabControll = new VocabularyController();
+    private List<Vocabulary> vocabularys = vocabControll.getAllVocabulary();
+    
     
     public PanelLearning() {
         initComponents();
+        flashcards = new ArrayList<>();
+        loadFlashcardsFromDatabase();  // Tải flashcards từ cơ sở dữ liệu
+        currentCardIndex = 0;  // Bắt đầu từ flashcard đầu tiên
+        showingAnswer = false; // Ban đầu chỉ hiển thị câu hỏi
         
+        // Hiển thị câu hỏi đầu tiên
+        if (!vocabularys.isEmpty()) {
+            jLabel1.setText(vocabularys.get(currentCardIndex).getWord());
+        }
+    }
+    private void loadFlashcardsFromDatabase() {
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=ELA_Database;encrypt=true;trustServerCertificate=true"; // Thay đổi tên cơ sở dữ liệu
+        String username = "admin"; // Thay đổi tên người dùng
+        String password = "1234567"; // Thay đổi mật khẩu
+
+        String query = "SELECT Word, Definition FROM Vocabulary";
+        
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String word = rs.getString("Word");
+                String definition = rs.getString("Definition");
+                flashcards.add(new String[]{word, definition});
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     
@@ -27,6 +66,10 @@ public class PanelLearning extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         pnStatistic1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         pnStatistic.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N
         pnStatistic.setText("Thống kê");
@@ -57,15 +100,65 @@ public class PanelLearning extends javax.swing.JPanel {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Hiển thị từ, nghĩa, ví dụ");
+
+        jButton1.setBackground(new java.awt.Color(234, 219, 200));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setText("Hiển thị đáp án");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(234, 219, 200));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setText("Câu tiếp");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(234, 219, 200));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton3.setText("Câu trước");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jButton1)
+                        .addGap(86, 86, 86)
+                        .addComponent(jButton2)
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton3)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 385, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(88, 88, 88))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -108,8 +201,44 @@ public class PanelLearning extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // Hiển thị đáp án khi nhấn nút "Hiển thị đáp án"
+        vocabularys = vocabControll.getAllVocabulary();
+        if (!showingAnswer) {
+            jLabel1.setText(vocabularys.get(currentCardIndex).getDefinition()); // Hiển thị đáp án flashcards.get(currentCardIndex)[1]
+            jButton1.setText("Hiển thị câu hỏi");
+        } else {
+            jLabel1.setText(vocabularys.get(currentCardIndex).getWord()); // Hiển thị câu hỏi flashcards.get(currentCardIndex)[0
+            jButton1.setText("Hiển thị đáp án");
+        }
+        showingAnswer = !showingAnswer;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // Chuyển đến flashcard tiếp theo khi nhấn nút "Next"
+        currentCardIndex = (currentCardIndex + 1) % vocabularys.size();  // Quay lại đầu danh sách khi hết
+        jLabel1.setText(vocabularys.get(currentCardIndex).getWord());  // Hiển thị câu hỏi mới
+        jButton1.setText("Hiển thị đáp án");
+        showingAnswer = false;  // Đặt lại trạng thái về câu hỏi
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // Quay lại flashcard trước đó khi nhấn nút "Previous"
+        currentCardIndex = (currentCardIndex - 1 + vocabularys.size()) % vocabularys.size();  // Quay lại cuối danh sách khi ở đầu
+        jLabel1.setText(vocabularys.get(currentCardIndex).getWord());  // Hiển thị câu hỏi mới
+        jButton1.setText("Hiển thị đáp án");
+        showingAnswer = false;  // Đặt lại trạng thái về câu hỏi
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
