@@ -26,6 +26,7 @@ public class PanelLibrary extends javax.swing.JPanel {
     public PanelLibrary(User user) throws SQLException {
         this.currentUser = user;
         this.currentUserID = currentUser.getUserID();
+        
         initComponents();
         centerWindow();
 
@@ -172,7 +173,7 @@ public class PanelLibrary extends javax.swing.JPanel {
         pnEnterInfo.add(btnUnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 130, -1));
 
         jLabel1.setFont(new java.awt.Font("Cascadia Code", 1, 24)); // NOI18N
-        jLabel1.setText("Thư viện từ vựng");
+        jLabel1.setText("THƯ VIỆN TỪ VỰNG");
         pnEnterInfo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(251, 251, 251));
@@ -272,7 +273,7 @@ public class PanelLibrary extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Xóa từ vựng thất bại!");
                 }
             }
-        }
+        }        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

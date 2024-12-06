@@ -7,6 +7,8 @@ import com.mycompany.englishlearningapp.Proccess.Vocabulary;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LibraryController {
 
@@ -240,5 +242,24 @@ public class LibraryController {
         }
 
         return false; // Trả về false nếu có lỗi xảy ra
+    }
+
+    public int GetNumberOfWord(int userID) {
+        String getNumSQL = "SELECT COUNT(*) FROM UserLibrary WHERE UserID = ?";
+        int count = 0;
+        try (Connection connection = Connect.getConnection(); PreparedStatement pst = connection.prepareStatement(getNumSQL)) {
+
+            pst.setInt(1, userID);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LibraryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
     }
 }

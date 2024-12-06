@@ -1,10 +1,13 @@
 package com.mycompany.englishlearningapp.Proccess;
 
+import java.sql.Date;
+
 public class User {
     
     private int UserID;
     private String Username;
     private String Email;
+    private Date dateCreated;
 
     // Constructor
     public User(int UserID, String Username, String Email) {
@@ -39,5 +42,13 @@ public class User {
 
     public void setEmail(String Email) {
         this.Email = Email;
+    }
+
+    public java.sql.Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(java.sql.Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

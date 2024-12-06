@@ -17,7 +17,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm(String userName) throws SQLException {
         setTitle("English Learning App - " + userName);
         this.currentUser = UserController.getUserByName(userName);
-
+        
         initComponents();
         centerWindow();
 
@@ -32,7 +32,7 @@ public class MainForm extends javax.swing.JFrame {
         pnContainer.add(new PanelHome(currentUser), "PanelHome");
         pnContainer.add(new PanelLibrary(currentUser), "PanelLibrary");
         pnContainer.add(new PanelLearning(), "PanelLearning");
-        pnContainer.add(new PanelStatistic(), "PanelStatistic");
+        pnContainer.add(new PanelProfile(currentUser), "PanelStatistic");
     }
 
     public MainForm() throws SQLException {
@@ -125,7 +125,7 @@ public class MainForm extends javax.swing.JFrame {
         btnStatistic.setBackground(new java.awt.Color(251, 251, 251));
         btnStatistic.setFont(new java.awt.Font("Cascadia Mono", 0, 16)); // NOI18N
         btnStatistic.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\EnglishLearningApp\\src\\main\\Resources\\Image\\icons8-statistic-basic-outline\\icons8-graph-30.png")); // NOI18N
-        btnStatistic.setText("Thống kê");
+        btnStatistic.setText("Hồ sơ");
         btnStatistic.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnStatistic.setIconTextGap(10);
         btnStatistic.addActionListener(new java.awt.event.ActionListener() {

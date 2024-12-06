@@ -239,7 +239,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Cascadia Code" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Th&#x1b0; vi&#x1ec7;n t&#x1eeb; v&#x1ef1;ng"/>
+            <Property name="text" type="java.lang.String" value="TH&#x1af; VI&#x1ec6;N T&#x1eea; V&#x1ef0;NG"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

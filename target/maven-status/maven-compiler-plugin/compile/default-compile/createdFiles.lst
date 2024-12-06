@@ -1,7 +1,6 @@
 com\mycompany\englishlearningapp\Proccess\Library.class
 com\mycompany\englishlearningapp\Interface\PanelLibrary$7.class
 com\mycompany\englishlearningapp\Database\LibraryController.class
-com\mycompany\englishlearningapp\Interface\PanelStatistic.class
 com\mycompany\englishlearningapp\Interface\SignUp$3.class
 com\mycompany\englishlearningapp\Interface\MainForm$3.class
 com\mycompany\englishlearningapp\Proccess\FlashCard$2.class
@@ -29,6 +28,7 @@ com\mycompany\englishlearningapp\Proccess\Vocabulary.class
 com\mycompany\englishlearningapp\Interface\CheckEmailValid$1.class
 com\mycompany\englishlearningapp\Interface\CheckEmailValid.class
 com\mycompany\englishlearningapp\Interface\PanelLibrary$2.class
+com\mycompany\englishlearningapp\Interface\PanelProfile.class
 com\mycompany\englishlearningapp\Model\Tumoi.class
 com\mycompany\englishlearningapp\Interface\Login.class
 com\mycompany\englishlearningapp\Interface\SignUp$1.class
