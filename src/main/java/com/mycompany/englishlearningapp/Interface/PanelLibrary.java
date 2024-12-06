@@ -2,8 +2,8 @@ package com.mycompany.englishlearningapp.Interface;
 
 import com.mycompany.englishlearningapp.Database.LibraryController;
 import com.mycompany.englishlearningapp.Database.VocabularyController;
+import com.mycompany.englishlearningapp.Model.Vocabulary;
 import com.mycompany.englishlearningapp.Proccess.User;
-import com.mycompany.englishlearningapp.Proccess.Vocabulary;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.SQLException;

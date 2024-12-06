@@ -1,8 +1,9 @@
 package com.mycompany.englishlearningapp.Database;
 
+import com.mycompany.englishlearningapp.Model.Vocabulary;
 import com.mycompany.englishlearningapp.Proccess.ProficiencyLevel;
 import com.mycompany.englishlearningapp.Proccess.UserLibraryRecord;
-import com.mycompany.englishlearningapp.Proccess.Vocabulary;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -92,9 +93,11 @@ public class LibraryController {
             while (rs.next()) {
                 // Tạo đối tượng Vocabulary từ kết quả truy vấn
                 Vocabulary vocab = new Vocabulary(
+                        rs.getInt("VocabularyID"),
                         rs.getString("Word"),
                         rs.getString("Definition"),
-                        rs.getString("Example")
+                        rs.getString("Example"),
+                        rs.getDate("DateAdded").toLocalDate() == null ? null : rs.getDate("DateAdded").toLocalDate()
                 );
                 vocabList.add(vocab);  // Thêm vào danh sách
             }

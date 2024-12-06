@@ -1,6 +1,6 @@
 package com.mycompany.englishlearningapp.Database;
 
-import com.mycompany.englishlearningapp.Proccess.Vocabulary;
+import com.mycompany.englishlearningapp.Model.Vocabulary;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,14 +29,16 @@ public class VocabularyController {
         try (Connection conn = Connect.getConnection(); PreparedStatement pst = conn.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 vocabList.add(new Vocabulary(
+                        rs.getInt("VocabularyID"),
                         rs.getString("Word"),
                         rs.getString("Definition"),
-                        rs.getString("Example")
+                        rs.getString("Example"),
+                        rs.getDate("DateAdded").toLocalDate() == null ? null : rs.getDate("DateAdded").toLocalDate()
                 ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        } 
         return vocabList;
     }
 
@@ -48,9 +50,12 @@ public class VocabularyController {
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
                     return new Vocabulary(
+                            rs.getInt("VocabularyID"),
                             rs.getString("Word"),
                             rs.getString("Definition"),
-                            rs.getString("Example")
+                            rs.getString("Example"),
+                            rs.getDate("DateAdded").toLocalDate() == null ? null : rs.getDate("DateAdded").toLocalDate()
+                            
                     );
                 }
             }
@@ -71,7 +76,8 @@ public class VocabularyController {
                             rs.getInt("VocabularyID"),
                             rs.getString("Word"),
                             rs.getString("Definition"),
-                            rs.getString("Example")
+                            rs.getString("Example"),
+                            rs.getDate("DateAdded").toLocalDate() == null ? null : rs.getDate("DateAdded").toLocalDate()
                     );
                 }
             }
@@ -107,4 +113,11 @@ public class VocabularyController {
             return false;
         }
     }
+    
+    public static void main(String[] args) {
+        VocabularyController vc = new VocabularyController();
+        List<Vocabulary> li = vc.getAllVocabulary();
+        System.out.println(li.get(0).getWord());
+    }
 }
+
