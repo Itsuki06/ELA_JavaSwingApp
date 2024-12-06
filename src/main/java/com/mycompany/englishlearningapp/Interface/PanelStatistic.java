@@ -18,7 +18,7 @@ public class PanelStatistic extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         pnStatistic = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(251, 251, 251));
+        jPanel1.setBackground(new java.awt.Color(254, 250, 246));
         jPanel1.setPreferredSize(new java.awt.Dimension(1040, 680));
 
         pnStatistic.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N

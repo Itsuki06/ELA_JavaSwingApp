@@ -1,34 +1,62 @@
 package com.mycompany.englishlearningapp.Interface;
 
 import com.mycompany.englishlearningapp.Database.LibraryController;
+import com.mycompany.englishlearningapp.Database.VocabularyController;
 import com.mycompany.englishlearningapp.Proccess.User;
 import com.mycompany.englishlearningapp.Proccess.Vocabulary;
-
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelLibrary extends javax.swing.JPanel {
-
-    final  LibraryController lib = new LibraryController();
     private final DefaultTableModel tableModel = new DefaultTableModel();
+    final VocabularyController voc = new VocabularyController();
+    final LibraryController lib = new LibraryController();
+    private boolean apply = true;
+    private Runnable callBack;
     private User currentUser = new User();
-    private int currentUserID;
+    private int currentUserID = -1;
+    private int currentWordID = -1;
 
     public PanelLibrary(User user) throws SQLException {
         this.currentUser = user;
         this.currentUserID = currentUser.getUserID();
-
         initComponents();
+        centerWindow();
 
-        String[] colsName = {"Từ mới", "Định nghĩa", "Ví dụ"};
-        tableModel.setColumnIdentifiers(colsName);
-
+        // Initialize Table Columns
+        String[] columnNames = {"Từ mới", "Định nghĩa", "Ví dụ"};
+        tableModel.setColumnIdentifiers(columnNames);
         tblVocabulary.setModel(tableModel);
 
-        ShowData(currentUserID);
+        // Load initial data
+        LoadVocabularyData();
+        SetNull();
+        SetLock(true);
+        SetButton(true);
+
+        tblVocabulary.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVocabularyMouseClicked(evt);
+            }
+        });
+    }
+
+    public PanelLibrary() throws SQLException {
+        initComponents();
+    }
+
+    private void centerWindow() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
     }
 
     /**
@@ -40,58 +68,135 @@ public class PanelLibrary extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnEnterInfo = new javax.swing.JPanel();
+        lblVocabulary = new javax.swing.JLabel();
+        lblDefinition = new javax.swing.JLabel();
+        lblExample = new javax.swing.JLabel();
+        txtVocabulary = new javax.swing.JTextField();
+        txtDefinition = new javax.swing.JTextField();
+        txtExample = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
         btnModify = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblVocabulary = new javax.swing.JTable();
+        btnDelete = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
+        btnUnSave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane = new javax.swing.JScrollPane();
+        tblVocabulary = new javax.swing.JTable();
 
-        jPanel1.setBackground(new java.awt.Color(255, 247, 209));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1040, 680));
+        pnEnterInfo.setBackground(new java.awt.Color(254, 250, 246));
+        pnEnterInfo.setPreferredSize(new java.awt.Dimension(960, 238));
+        pnEnterInfo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnModify.setBackground(new java.awt.Color(254, 250, 246));
-        btnModify.setFont(new java.awt.Font("Cascadia Code", 0, 16)); // NOI18N
-        btnModify.setText("Chỉnh sửa");
-        btnModify.setPreferredSize(new java.awt.Dimension(200, 50));
+        lblVocabulary.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
+        lblVocabulary.setText("Từ mới");
+        pnEnterInfo.add(lblVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
+
+        lblDefinition.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
+        lblDefinition.setText("Định nghĩa");
+        pnEnterInfo.add(lblDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        lblExample.setFont(new java.awt.Font("Cascadia Code", 1, 18)); // NOI18N
+        lblExample.setText("Ví dụ");
+        pnEnterInfo.add(lblExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
+
+        txtVocabulary.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        pnEnterInfo.add(txtVocabulary, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 350, -1));
+
+        txtDefinition.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        pnEnterInfo.add(txtDefinition, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 700, -1));
+
+        txtExample.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        pnEnterInfo.add(txtExample, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 700, -1));
+
+        btnAdd.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnAdd.setText("Thêm");
+        btnAdd.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        pnEnterInfo.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
+
+        btnModify.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnModify.setText("Sửa");
+        btnModify.setPreferredSize(new java.awt.Dimension(100, 30));
         btnModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModifyActionPerformed(evt);
             }
         });
+        pnEnterInfo.add(btnModify, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
+
+        btnDelete.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnDelete.setText("Xóa");
+        btnDelete.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        pnEnterInfo.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, -1, -1));
+
+        btnSave.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnSave.setText("Lưu");
+        btnSave.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        pnEnterInfo.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, -1, -1));
+
+        btnClose.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnClose.setText("Thoát");
+        btnClose.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCloseActionPerformed(evt);
+            }
+        });
+        pnEnterInfo.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 220, -1, -1));
+
+        btnUnSave.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        btnUnSave.setText("Không Lưu");
+        btnUnSave.setPreferredSize(new java.awt.Dimension(100, 30));
+        btnUnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnSaveActionPerformed(evt);
+            }
+        });
+        pnEnterInfo.add(btnUnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 130, -1));
+
+        jLabel1.setFont(new java.awt.Font("Cascadia Code", 1, 24)); // NOI18N
+        jLabel1.setText("Thư viện từ vựng");
+        pnEnterInfo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(251, 251, 251));
+        jPanel2.setPreferredSize(new java.awt.Dimension(372, 50));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        pnEnterInfo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 800, -1));
+
+        jScrollPane.setBackground(new java.awt.Color(251, 251, 251));
+        jScrollPane.setFont(new java.awt.Font("Cascadia Code", 0, 16)); // NOI18N
 
         tblVocabulary.setFont(new java.awt.Font("Cascadia Code", 0, 16)); // NOI18N
         tblVocabulary.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -117,88 +222,143 @@ public class PanelLibrary extends javax.swing.JPanel {
                 "Từ mới", "Định nghĩa", "Ví dụ"
             }
         ));
-        jScrollPane1.setViewportView(tblVocabulary);
-        if (tblVocabulary.getColumnModel().getColumnCount() > 0) {
-            tblVocabulary.getColumnModel().getColumn(1).setMinWidth(100);
-            tblVocabulary.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tblVocabulary.getColumnModel().getColumn(2).setMinWidth(350);
-            tblVocabulary.getColumnModel().getColumn(2).setPreferredWidth(350);
-        }
-
-        jLabel1.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N
-        jLabel1.setText("Danh sách từ mới của bạn");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnModify, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModify, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
+        tblVocabulary.setRowHeight(30);
+        jScrollPane.setViewportView(tblVocabulary);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnEnterInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 1040, Short.MAX_VALUE)
+            .addComponent(jScrollPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(pnEnterInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        SetNull();
+        SetLock(false);
+        SetButton(false);
+        apply = true;
+    }//GEN-LAST:event_btnAddActionPerformed
+
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
-        try {
-            AddVocabulary addForm = new AddVocabulary(currentUserID);
 
-            // Cập nhật lại bảng sau khi thêm hoặc chỉnh sửa từ vựng
-            addForm.setCallBack(() -> {
-                try {
-                    ShowData(currentUserID);  // Cập nhật lại bảng với dữ liệu mới
-                } catch (SQLException ex) {
-                    Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-            addForm.setVisible(true);
-            System.out.println("Current UserID: " + currentUserID);
-        } catch (SQLException ex) {
-            Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_btnModifyActionPerformed
 
-    private void ShowData(int userID) throws SQLException {
-        // Lấy danh sách từ vựng của người dùng thông qua LibraryController
-        List<Vocabulary> vocabList = lib.GetVocabByUserID(userID);  // Giả sử lib.GetVocabByUserLibrary trả về danh sách từ vựng
-        ClearData();  // Xóa dữ liệu hiện tại trong bảng
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String word = txtVocabulary.getText();
+        if (word.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần xoá!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (currentWordID <= 0) {
+                JOptionPane.showMessageDialog(this, "Chưa chọn từ vựng để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa từ \"" + word + "\"?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean isDeleted = lib.DeleteVocabularyAndUserLibrary(currentUserID, currentWordID);
+                if (isDeleted) {
+                    JOptionPane.showMessageDialog(null, "Xóa từ vựng thành công!");
+                    LoadVocabularyData();
+                    SetNull();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Xóa từ vựng thất bại!");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-        // Duyệt qua danh sách từ vựng và thêm vào bảng
-        for (Vocabulary vocab : vocabList) {
-            String rows[] = {vocab.getWord(), vocab.getDefinition(), vocab.getExample()};
-            tableModel.addRow(rows);
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        String nw = txtVocabulary.getText();
+        String wd = txtDefinition.getText();
+        String eg = txtExample.getText();
+
+        if (nw.length() == 0 || wd.length() == 0 || eg.length() == 0) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!", "Thông báo", 1);
+        } else {
+            try {
+                if (apply) {
+                    boolean isInserted = lib.InsertVocabularyAndUserLibrary(currentUserID, nw, wd, eg);
+                    if (isInserted) {
+                        JOptionPane.showMessageDialog(null, "Thêm từ vựng thành công!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thêm từ vựng thất bại!");
+                    }
+                } else {
+                    lib.UpdateVocabulary(currentWordID, nw, wd, eg);
+                }
+                ClearData();
+                LoadVocabularyData();
+                SetNull();
+                SetLock(true);
+                SetButton(true);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Cập nhật thất bại!", "Thông báo", 1);
+            }
+        }
+
+        if (callBack != null) {
+            callBack.run();
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnUnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnSaveActionPerformed
+        SetNull(); // Xóa các TextField
+        SetLock(true); // Khóa các TextField
+        SetButton(true); // Kích hoạt các Button Thêm, Sửa, Xóa, Thoát
+    }//GEN-LAST:event_btnUnSaveActionPerformed
+
+
+    public void tblVocabularyMouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = tblVocabulary.getSelectedRow();
+        if (selectedRow >= 0) {
+            // Lấy từ vựng được chọn từ bảng
+            String word = tableModel.getValueAt(selectedRow, 0).toString();
+
+            // Dùng VocabularyController để lấy chi tiết từ vựng
+            Vocabulary vocab = voc.getVocabularyByWord(word);
+
+            if (vocab != null) {
+                currentWordID = vocab.getVocabularyID(); // Cập nhật biến toàn cục
+                txtVocabulary.setText(vocab.getWord());
+                txtDefinition.setText(vocab.getDefinition());
+                txtExample.setText(vocab.getExample());
+            } else {
+                currentWordID = -1; // Reset nếu không tìm thấy
+                System.out.println("Không tìm thấy từ vựng: " + word);
+            }
+            System.out.println("currentWordID đã được cập nhật: " + currentWordID);
+
+        }
+    }
+
+    private void LoadVocabularyData() {
+        try {
+            // Lấy danh sách các từ vựng dựa trên UserID
+            List<Vocabulary> vocabList = lib.GetVocabByUserID(currentUserID);
+
+            // Xóa dữ liệu cũ trong bảng
+            ClearData();
+
+            // Duyệt qua các từ vựng và lấy thông tin chi tiết từ VocabularyController
+            for (Vocabulary vocab : vocabList) {
+                if (vocab != null) {
+                    tableModel.addRow(new String[]{vocab.getWord(), vocab.getDefinition(), vocab.getExample()});
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading vocabulary data", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -208,11 +368,96 @@ public class PanelLibrary extends javax.swing.JPanel {
             tableModel.removeRow(i);
         }
     }
+
+    private void SetNull() {
+        this.txtVocabulary.setText(null);
+        this.txtDefinition.setText(null);
+        this.txtExample.setText(null);
+    }
+
+    private void SetLock(boolean a) {
+        this.txtVocabulary.setEnabled(!a);
+        this.txtDefinition.setEnabled(!a);
+        this.txtExample.setEnabled(!a);
+    }
+
+    private void SetButton(boolean a) {
+        this.btnAdd.setEnabled(a);
+        this.btnDelete.setEnabled(a);
+        this.btnModify.setEnabled(a);
+        this.btnSave.setEnabled(!a);
+        this.btnUnSave.setEnabled(!a);
+        this.btnClose.setEnabled(a);
+    }
+
+    public void setCallBack(Runnable callBack) {
+        this.callBack = callBack;
+    }
+
+    // Gọi lại khi cần, ví dụ sau khi lưu dữ liệu
+    private void onSave() {
+        if (callBack != null) {
+            callBack.run(); // Thực thi callBack để cập nhật dữ liệu
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PanelLibrary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PanelLibrary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PanelLibrary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PanelLibrary.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new PanelLibrary().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PanelLibrary.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnModify;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUnSave;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JLabel lblDefinition;
+    private javax.swing.JLabel lblExample;
+    private javax.swing.JLabel lblVocabulary;
+    private javax.swing.JPanel pnEnterInfo;
     private javax.swing.JTable tblVocabulary;
+    private javax.swing.JTextField txtDefinition;
+    private javax.swing.JTextField txtExample;
+    private javax.swing.JTextField txtVocabulary;
     // End of variables declaration//GEN-END:variables
 }

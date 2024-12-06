@@ -15,11 +15,16 @@ public class PanelLearning extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnStatistic = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        pnStatistic1 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(251, 251, 251));
+        pnStatistic.setFont(new java.awt.Font("Cascadia Code", 0, 20)); // NOI18N
+        pnStatistic.setText("Thống kê");
+
+        jPanel1.setBackground(new java.awt.Color(254, 250, 246));
         jPanel1.setPreferredSize(new java.awt.Dimension(1040, 680));
         jPanel1.setLayout(null);
 
@@ -55,6 +60,11 @@ public class PanelLearning extends javax.swing.JPanel {
         jPanel1.add(jPanel3);
         jPanel3.setBounds(540, 80, 340, 500);
 
+        pnStatistic1.setFont(new java.awt.Font("Cascadia Code", 1, 24)); // NOI18N
+        pnStatistic1.setText("Học từ vựng");
+        jPanel1.add(pnStatistic1);
+        pnStatistic1.setBounds(420, 30, 170, 29);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,5 +86,7 @@ public class PanelLearning extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel pnStatistic;
+    private javax.swing.JLabel pnStatistic1;
     // End of variables declaration//GEN-END:variables
 }
